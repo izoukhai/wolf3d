@@ -15,6 +15,17 @@
 
 void        s_open(env_t *env, char *file)
 {
-    if ((env->fd = open(file, O_RDONLY)) == -1)
-        die("can't open file.");
+	if ((env->fd = open(file, O_RDONLY)) == -1)
+		die("can't open file.");
+}
+
+void        check_map(env_t *env)
+{
+	index_t index;
+
+	index.i = -1;
+	while (++index.i < env->map.size.i)
+	{
+		
+	}
 }

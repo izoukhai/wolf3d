@@ -98,6 +98,7 @@ void			draw_floor(env_t *env);
 void        	ray_cast(env_t *env);
 
 void			init_map(env_t *env);
+void			check_map(env_t *env);
 
 void			die(char *msg);
 point_t			index_to_pos(index_t index);
