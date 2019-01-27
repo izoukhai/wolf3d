@@ -13,13 +13,17 @@
 
 #include "../wolf3d.h"
 
-void		init(t_env *env, char *map)
+static void	init_core(t_env *env)
 {
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, WIN_W, WIN_H, "Wolf3D");
 	env->image.ptr = mlx_new_image(env->mlx, WIN_W, WIN_H);
 	env->image.buf = (int*)mlx_get_data_addr(env->image.ptr, &(env->image.bpp),
 		&(env->image.szl), &(env->image.endian));
+}
+
+void		init(t_env *env, char *map)
+{
 	env->file = map;
 	env->player.pos.x = -1;
 	env->player.pos.y = -1;
@@ -35,6 +39,7 @@ void		init(t_env *env, char *map)
 	env->left = 0;
 	env->down = 0;
 	env->color_select = 0;
+	init_core(env);
 	init_colors(env);
 	init_map(env);
 }
