@@ -1,23 +1,36 @@
+/* ************************************************************************** */
+/*                                                          LE - /            */
+/*                                                              /             */
+/*   line.c                                           .::    .:/ .      .::   */
+/*                                                 +:+:+   +:    +:  +:+:+    */
+/*   By: izoukhai <marvin@le-101.fr>                +:+   +:    +:    +:+     */
+/*                                                 #+#   #+    #+    #+#      */
+/*   Created: 2019/01/27 04:47:40 by izoukhai     #+#   ##    ##    #+#       */
+/*   Updated: 2019/01/27 04:47:42 by izoukhai    ###    #+. /#+    ###.fr     */
+/*                                                         /                  */
+/*                                                        /                   */
+/* ************************************************************************** */
+
 #include "../wolf3d.h"
 
-static inline void	set_line(point_t *step, point_t *src, point_t *dst)
+static inline void	set_line(t_point *step, t_point *src, t_point *dst)
 {
 	(*step).x = (*dst).x - (*src).x;
 	(*step).y = (*dst).y - (*src).y;
 }
 
-static inline void	set_point(point_t *pos, point_t src, int i, point_t step)
+static inline void	set_point(t_point *pos, t_point src, int i, t_point step)
 {
 	(*pos).x = src.x + i * step.x;
 	(*pos).y = src.y + i * step.y;
 }
 
-void				put_line(env_t *env, point_t src, point_t dst, int color)
+void				put_line(t_env *env, t_point src, t_point dst, int color)
 {
-	point_t			step;
+	t_point			step;
 	int				n;
 	int				i;
-	point_t			pos;
+	t_point			pos;
 
 	i = -1;
 	set_line(&step, &src, &dst);

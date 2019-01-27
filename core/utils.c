@@ -13,22 +13,31 @@
 
 #include "../wolf3d.h"
 
-void		die(char *msg)
+void		die(t_env *env, char *msg, const int b_free)
 {
+	t_index	index;
+
+	index.i = -1;
 	ft_putstr(msg);
+	if (b_free && env->malloced)
+	{
+		while (++index.i < env->map.size.i)
+			free(env->map.coord[index.i]);
+		free(env->map.coord);
+	}
 	exit(1);
 }
 
-point_t		index_to_pos(index_t index)
+t_point		t_indexo_pos(t_index index)
 {
-	point_t res;
+	t_point res;
 
 	res.x = index.j;
 	res.y = index.i;
 	return (res);
 }
 
-void		set_index(index_t *index, int i, int j)
+void		set_index(t_index *index, int i, int j)
 {
 	index->i = i;
 	index->j = j;
@@ -47,9 +56,9 @@ int			ft_strichr(char *str, char c)
 	return (res);
 }
 
-point_t		new_point(double x, double y)
+t_point		new_point(double x, double y)
 {
-	point_t	res;
+	t_point	res;
 
 	res.x = x;
 	res.y = y;

@@ -13,19 +13,24 @@
 
 #include "../wolf3d.h"
 
+int			cross_exit(t_env *env)
+{
+	die(env, "program exit.\n", 1);
+	return (0);
+}
+
 int			main(int ac, char **av)
 {
-	env_t	env;
+	t_env	env;
+
 	if ((env.fd = open(av[1], O_RDONLY)) == -1)
-		die("invalid file\n");
+		die(&env, "invalid file\n", 0);
 	init(&env, av[1]);
-	index_t index;
-	index.i = -1;
-	index.j = -1;
 	ray_cast(&env);
-	//mlx_put_image_to_window(env.mlx, env.win, env.image.ptr, 0, 0);
 	mlx_hook(env.win, 2, 0, on_press, &env);
-	//mlx_hook(env.win, 2, 0, on_release, &env);
+	mlx_hook(env.win, 3, 0, on_release, &env);
+	mlx_hook(env.win, 17, 0, cross_exit, &env);
+	mlx_loop_hook(env.mlx, handle_move, &env);
 	mlx_loop(env.mlx);
 	return (0);
 }

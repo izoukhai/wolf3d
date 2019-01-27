@@ -13,7 +13,7 @@
 
 #include "../wolf3d.h"
 
-void		init(env_t *env, char *map)
+void		init(t_env *env, char *map)
 {
 	env->mlx = mlx_init();
 	env->win = mlx_new_window(env->mlx, WIN_W, WIN_H, "Wolf3D");
@@ -25,13 +25,14 @@ void		init(env_t *env, char *map)
 	env->player.pos.y = -1;
 	env->player.dir.x = -1;
 	env->player.dir.y = 0;
-	env->time = 0;
-	env->old_time = 0;
 	env->cam = 0;
 	env->plane.x = 0;
 	env->plane.y = 0.66;
-	env->rs = 0.05;
-	env->ms = 0.05;
+	env->malloced = 0;
+	env->speed = 0.08;
+	env->right = 0;
+	env->up = 0;
+	env->left = 0;
+	env->down = 0;
 	init_map(env);
 }
-

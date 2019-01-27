@@ -13,19 +13,45 @@
 
 #include "../wolf3d.h"
 
-void        s_open(env_t *env, char *file)
+void		s_open(t_env *env, char *file)
 {
 	if ((env->fd = open(file, O_RDONLY)) == -1)
-		die("can't open file.");
+		die(env, "can't open file.", 0);
 }
 
-void        check_map(env_t *env)
+static int	check_length(int nb)
 {
-	index_t index;
+	int		res;
 
+	res = 1;
+	while (nb / 10)
+		res++;
+	return (res);
+}
+
+void		check_map(t_env *env)
+{
+	t_index	index;
+	int		c;
+
+	c = 0;
 	index.i = -1;
 	while (++index.i < env->map.size.i)
 	{
-		
+		index.j = -1;
+		while (++index.j < env->map.size.j)
+		{
+			if (env->map.coord[index.i][index.j].value != 1 &&
+				(index.i == 0 || index.i == env->map.size.i))
+				die(env, "invalid map (borders are not walls)\n", 1);
+			if (env->map.coord[index.i][index.j].value != 1 && index.j == 0)
+				die(env, "invalid map (borders are not walls)\n", 1);
+			if (env->map.coord[index.i][index.j].value == 0)
+				c++;
+			if (check_length(env->map.coord[index.i][index.j].value) != 1)
+				die(env, "invalid map (map must contain only digits)\n", 1);
+		}
 	}
+	if (c == 0)
+		die(env, "invalid map (only walls)\n", 1);
 }

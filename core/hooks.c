@@ -13,82 +13,97 @@
 
 #include "../wolf3d.h"
 
-void		move_player(env_t *env, const int dir)
+void		move_player(t_env *env, const int dir)
 {
 	if (dir == 1)
 	{
-		if (env->map.coord[(int)(env->player.pos.y)][(int)(env->player.pos.x + env->player.dir.x * 0.2)].value == 0)
-			env->player.pos.x += env->player.dir.x * 0.2;
-		if (env->map.coord[(int)(env->player.pos.y + env->player.dir.y * 0.2)][(int)(env->player.pos.x)].value == 0)
-			env->player.pos.y += env->player.dir.y * 0.2;
+		if (env->map.coord[(int)(env->player.pos.y)][(int)(env->player.pos.x +
+			env->player.dir.x * env->speed)].value == 0)
+			env->player.pos.x += env->player.dir.x * env->speed;
+		if (env->map.coord[(int)(env->player.pos.y + env->player.dir.y *
+			env->speed)][(int)(env->player.pos.x)].value == 0)
+			env->player.pos.y += env->player.dir.y * env->speed;
 	}
 	if (dir == -1)
 	{
 		if (env->map.coord[(int)(env->player.pos.y)][(int)(env->player.pos.x
-			- env->player.dir.x * 0.2)].value == 0)
-				env->player.pos.x -= env->player.dir.x * 0.2;
-		if (env->map.coord[(int)(env->player.pos.y - env->player.dir.y * 0.2)]
-			[(int)(env->player.pos.x)].value == 0)
-				env->player.pos.y -= env->player.dir.y * 0.2;
+			- env->player.dir.x * env->speed)].value == 0)
+			env->player.pos.x -= env->player.dir.x * env->speed;
+		if (env->map.coord[(int)(env->player.pos.y - env->player.dir.y
+			* env->speed)][(int)(env->player.pos.x)].value == 0)
+			env->player.pos.y -= env->player.dir.y * env->speed;
 	}
 }
 
-void		move_cam(env_t *env, const int dir)
+void		move_cam(t_env *env, const int dir)
 {
+	double tmp;
+	double tmp2;
+
+	tmp = env->player.dir.x;
+	tmp2 = env->plane.x;
 	if (dir == 3)
 	{
-		double tmp = env->player.dir.x;
-		env->player.dir.x = env->player.dir.x * cos(-env->rs) -
-			env->player.dir.y * sin(-env->rs);
-		env->player.dir.y = tmp * sin(-env->rs) + env->player.dir.y * cos(-env->rs);
-		double tmp2 = env->plane.x;
-		env->plane.x = env->plane.x * cos(-env->rs) - env->plane.y * sin(-env->rs);
-		env->plane.y = tmp2 * sin(-env->rs) + env->plane.y * cos(-env->rs);
+		env->player.dir.x = env->player.dir.x * cos(-0.05) -
+			env->player.dir.y * sin(-0.05);
+		env->player.dir.y = tmp * sin(-0.05) + env->player.dir.y * cos(-0.05);
+		env->plane.x = env->plane.x * cos(-0.05) - env->plane.y * sin(-0.05);
+		env->plane.y = tmp2 * sin(-0.05) + env->plane.y * cos(-0.05);
 	}
 	if (dir == 1)
 	{
-		double tmp = env->player.dir.x;
-		env->player.dir.x = env->player.dir.x * cos(env->rs) -
-			env->player.dir.y * sin(env->rs);
-		env->player.dir.y = tmp * sin(env->rs) + env->player.dir.y * cos(env->rs);
-		double tmp2 = env->plane.x;
-		env->plane.x = env->plane.x * cos(-env->rs) - env->plane.y * sin(env->rs);
-		env->plane.y = tmp2 * sin(env->rs) + env->plane.y * cos(env->rs);
+		env->player.dir.x = env->player.dir.x * cos(0.05) -
+			env->player.dir.y * sin(0.05);
+		env->player.dir.y = tmp * sin(0.05) + env->player.dir.y * cos(0.05);
+		tmp2 = env->plane.x;
+		env->plane.x = env->plane.x * cos(0.05) - env->plane.y * sin(0.05);
+		env->plane.y = tmp2 * sin(0.05) + env->plane.y * cos(0.05);
 	}
 }
 
-int			on_press(int key, env_t *env)
+int			on_press(int key, t_env *env)
 {
 	if (key == kVK_UpArrow)
-		move_player(env, 1);
+		env->up = 1;
 	if (key == kVK_DownArrow)
-		move_player(env, -1);
-	if (key == kVK_LeftArrow)
-		move_cam(env, 1);
+		env->down = 1;
 	if (key == kVK_RightArrow)
-		move_cam(env, 3);
-	clear(env);
-	ray_cast(env);
-	return (0);
+		env->right = 1;
+	if (key == kVK_LeftArrow)
+		env->left = 1;
+	if (key == 257)
+		env->speed = 0.15;
+	if (key == kVK_Escape)
+		die(env, "program exit.", 1);
+	return (1);
 }
 
-int			on_release(int key, env_t *env)
+int			on_release(int key, t_env *env)
 {
 	if (key == kVK_UpArrow)
-		move_player(env, 1);
+		env->up = 0;
 	if (key == kVK_DownArrow)
-		move_player(env, -1);
-	if (key == kVK_LeftArrow)
-		move_cam(env, 1);
+		env->down = 0;
 	if (key == kVK_RightArrow)
-		move_cam(env, 3);
-	clear(env);
-	ray_cast(env);
-	return (0);
+		env->right = 0;
+	if (key == kVK_LeftArrow)
+		env->left = 0;
+	if (key == 257)
+		env->speed = 0.08;
+	return (1);
 }
 
-int			handle_keys(int key, env_t *env)
+int			handle_move(t_env *env)
 {
-	on_press(key, env);
-	on_release(key, env);
+	if (env->right)
+		move_cam(env, 3);
+	if (env->left)
+		move_cam(env, 1);
+	if (env->up)
+		move_player(env, 1);
+	if (env->down)
+		move_player(env, -1);
+	clear(env);
+	ray_cast(env);
+	return (1);
 }

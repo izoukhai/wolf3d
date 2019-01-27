@@ -1,5 +1,5 @@
 NAME=wolf3d
-SRC= core/init.c core/main.c graphic/draw.c graphic/line.c graphic/utils.c parser/parser.c core/utils.c parser/parse_utils.c world/ray.c core/hooks.c
+SRC= core/init.c core/main.c graphic/draw.c graphic/line.c parser/parser.c core/utils.c parser/parse_utils.c world/ray.c core/hooks.c
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)
@@ -7,7 +7,7 @@ all: $(NAME)
 $(NAME):$(OBJ) wolf3d.h
 	make -C graphic/minilib/
 	make -C libft/
-	gcc $(SRC) libft/libft.a graphic/minilib/libmlx.a -o $(NAME) -g -framework OpenGL -framework AppKit
+	gcc $(SRC) libft/libft.a graphic/minilib/libmlx.a -o $(NAME) -framework OpenGL -framework AppKit -lpthread
 
 clean:
 		make clean -C libft/

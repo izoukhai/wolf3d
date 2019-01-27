@@ -17,103 +17,102 @@
 # include "graphic/minilib/mlx.h"
 # include "libft/includes/get_next_line.h"
 # include "keys.h"
-# define WIN_W 1200
+# define WIN_W 1700
 # define WIN_H 1200
 # define RGB(r,g,b) (r << 16) + (g << 8) + (b)
 
-typedef struct
+typedef struct	s_point
 {
-	double  	x;
-	double  	y;
+	double		x;
+	double		y;
 	uint32_t	value;
-}				point_t; 
+}				t_point;
 
-typedef struct
+typedef struct	s_index
 {
 	int			i;
 	int			j;
-}				index_t;
+}				t_index;
 
-typedef struct
+typedef struct	s_map
 {
-	point_t		**coord;
-	index_t		size;
-}				map_t;
+	t_point		**coord;
+	t_index		size;
+}				t_map;
 
-typedef struct
+typedef struct	s_player
 {
-	point_t		pos;
-	point_t		dir;
-	point_t		raypos;
-	point_t		raydir;
-}				player_t;
+	t_point		pos;
+	t_point		dir;
+	t_point		raypos;
+	t_point		raydir;
+}				t_player;
 
-typedef struct
+typedef struct	s_image
 {
 	void		*ptr;
 	int			*buf;
 	int			szl;
 	int			bpp;
 	int			endian;
-}				image_t;
+}				t_image;
 
-typedef struct
+typedef struct	s_env
 {
 	void		*mlx;
 	void		*win;
-	image_t		image;
-	map_t		map;
+	int			malloced;
+	t_image		image;
+	t_map		map;
 	int			map_x;
 	int			map_y;
-	point_t		delta_dist;
-	point_t		step;
-	point_t		side_dist;
+	t_point		delta_dist;
+	t_point		step;
+	t_point		side_dist;
 	int			type;
 	int			ray_hit;
-	double			wall_dist;
+	double		wall_dist;
 	double		ray_height;
 	int			start;
 	int			end;
 	int			color;
-	player_t	player;
-	point_t		plane;
-	double		time;
-	double		old_time;
-	double		ms;
-	double		rs;
+	t_player	player;
+	t_point		plane;
+	int			right;
+	int			left;
+	int			up;
+	int			down;
 	double		cam;
 	char		*file;
 	int			fd;
-}				env_t;
+	double		speed;
+}				t_env;
 
-void			init(env_t *env, char *map);
-void			init_ray(env_t *env, int x);
+void			init(t_env *env, char *map);
+void			init_ray(t_env *env, int x);
 
-void			put_pixel(env_t *env, double x, double y, int color);
-void			put_line(env_t *env, point_t src, point_t dst, int color);
-void			clear(env_t *env);
-void			connect_rect(env_t *env, index_t pos, int color);
-void			draw_wall(env_t *env, int x);
-void			draw_floor(env_t *env);
-void        	ray_cast(env_t *env);
+void			put_pixel(t_env *env, double x, double y, int color);
+void			put_line(t_env *env, t_point src, t_point dst, int color);
+void			clear(t_env *env);
+void			connect_rect(t_env *env, t_index pos, int color);
+void			draw_wall(t_env *env, int x);
+void			ray_cast(t_env *env);
 
-void			init_map(env_t *env);
-void			check_map(env_t *env);
+void			init_map(t_env *env);
+void			check_map(t_env *env);
 
-void			die(char *msg);
-point_t			index_to_pos(index_t index);
-void			set_index(index_t *index, int i, int j);
+void			die(t_env *env, char *msg, const int b_free);
+t_point			t_indexo_pos(t_index index);
+void			set_index(t_index *index, int i, int j);
 int				ft_strichr(char *str, char c);
-point_t			new_point(double x, double y);
+t_point			new_point(double x, double y);
 
-void			s_open(env_t *env, char *file);
+void			s_open(t_env *env, char *file);
 
-int				handle_keys(int key, env_t *env);
-int				on_release(int key, env_t *env);
-int				on_press(int key, env_t *env);
-void			move_player(env_t *env, const int dir);
-void			move_cam(env_t *env, const int dir);
+int				on_press(int key, t_env *env);
+int				on_release(int key, t_env *env);
+int				handle_move(t_env *env);
+void			move_player(t_env *env, const int dir);
+void			move_cam(t_env *env, const int dir);
 
 #endif
-
-
