@@ -34,5 +34,7 @@ void		init(t_env *env, char *map)
 	env->up = 0;
 	env->left = 0;
 	env->down = 0;
+	env->color_select = 0;
+	init_colors(env);
 	init_map(env);
 }

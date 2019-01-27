@@ -38,6 +38,7 @@ typedef struct	s_map
 {
 	t_point		**coord;
 	t_index		size;
+	int			color[3][5];
 }				t_map;
 
 typedef struct	s_player
@@ -76,6 +77,7 @@ typedef struct	s_env
 	int			start;
 	int			end;
 	int			color;
+	uint16_t	color_select;
 	t_player	player;
 	t_point		plane;
 	int			right;
@@ -114,5 +116,8 @@ int				on_release(int key, t_env *env);
 int				handle_move(t_env *env);
 void			move_player(t_env *env, const int dir);
 void			move_cam(t_env *env, const int dir);
+
+void			init_colors(t_env *env);
+void			set_colors(t_env *env);
 
 #endif

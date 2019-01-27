@@ -35,11 +35,11 @@ void				draw_wall(t_env *env, int x)
 
 	tmp = -1;
 	while (++tmp <= env->start)
-		put_pixel(env, x, tmp, RGB(20, 5, 40));
+		put_pixel(env, x, tmp, env->map.color[2][env->color_select]);
 	while (++env->start <= env->end)
 		put_pixel(env, x, (int)env->start, env->color);
 	while (++env->start <= WIN_H)
-		put_pixel(env, x, (int)env->start, RGB(40, 5, 80));
+		put_pixel(env, x, (int)env->start, env->map.color[2][env->color_select]);
 }
 
 void				clear(t_env *env)

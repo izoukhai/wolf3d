@@ -109,10 +109,7 @@ void		ray_cast(t_env *env)
 		env->end = env->ray_height / 2 + WIN_H / 2;
 		if (env->end >= WIN_H)
 			env->end = WIN_H - 1;
-		if (env->type == 1)
-			env->color = RGB(70, 20, 100);
-		else
-			env->color = (RGB(70, 20, 120));
+		env->color = env->map.color[env->type][env->color_select];
 		draw_wall(env, x);
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->image.ptr, 0, 0);

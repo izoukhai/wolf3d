@@ -75,6 +75,10 @@ int			on_press(int key, t_env *env)
 		env->speed = 0.15;
 	if (key == kVK_Escape)
 		die(env, "program exit.", 1);
+	if (key == kVK_ANSI_KeypadPlus && env->color_select < 4)
+		env->color_select++;
+	if (key == kVK_ANSI_KeypadMinus && env->color_select > 0)
+		env->color_select--;
 	return (1);
 }
 
