@@ -3,8 +3,8 @@ SRC= core/init.c core/main.c graphic/draw.c graphic/line.c parser/parser.c core/
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)
-
-$(NAME):$(OBJ) wolf3d.h
+	make -C libft/
+$(NAME):$(OBJ) wolf3d.h keys.h
 	make -C graphic/minilib/
 	make -C libft/
 	gcc $(SRC) libft/libft.a graphic/minilib/libmlx.a -o $(NAME) -framework OpenGL -framework AppKit -lpthread
