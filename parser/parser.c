@@ -17,28 +17,27 @@ static inline void	get_lines(t_env *env)
 {
 	char			*line;
 	t_index			index;
-	int				c;
-	int				tmp_j;
+	t_index			tmp;
 
 	set_index(&index, 0, -1);
-	c = 0;
-	tmp_j = -1;
+	set_index(&tmp, 0, -1);
 	while ((get_next_line(env->fd, &line)) == 1)
 	{
 		index.j = -1;
 		while (line[++index.j])
 			if (line[index.j] == '9')
-				c++;
+				tmp.i++;
 		index.i++;
 		if (env->map.size.j > 0)
-			tmp_j = env->map.size.j;
+			tmp.j = env->map.size.j;
 		env->map.size.j = index.j - ft_strichr(line, ' ');
-		if (tmp_j != -1 && tmp_j != env->map.size.j)
+		if (tmp.j != -1 && tmp.j != env->map.size.j)
 			die(env, "invalid map (lines are not equals)\n", 0);
+		free(line);
 	}
 	env->map.size.i = index.i;
 	close(env->fd);
-	if (c != 1)
+	if (tmp.i != 1)
 		die(env, "invalid map (can't find player position)\n", 0);
 }
 
@@ -79,7 +78,10 @@ static inline void	get_coord(t_env *env)
 			if ((ft_atoi(split[index.j])) == 9)
 				env->player.pos = t_indexo_pos(index);
 			env->map.coord[index.i][index.j].value = ft_atoi(split[index.j]);
+			free(split[index.j]);
 		}
+		free(split);
+		free(line);
 		index.i++;
 	}
 	close(env->fd);

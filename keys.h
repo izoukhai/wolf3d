@@ -11,6 +11,9 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
+#ifndef KEYS_H
+# define KEYS_H
+
 enum					e_keys
 {
 	kVK_ANSI_A = 0x00,
@@ -107,3 +110,5 @@ enum					e_keys
 	kVK_DownArrow = 0x7D,
 	kVK_UpArrow = 0x7E
 };
+
+#endif

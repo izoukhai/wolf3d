@@ -87,7 +87,7 @@ void		init_ray(t_env *env, int x)
 					(1 - env->step.x) / 2) / env->player.raydir.x) + 0.001;
 	else
 		env->wall_dist = (env->map_y - env->player.raypos.y +
-				(1 - env->step.y) / 2) / env->player.raydir.y;
+				(1 - env->step.y) / 2) / env->player.raydir.y + 0.001;
 }
 
 void		ray_cast(t_env *env)
@@ -110,9 +110,9 @@ void		ray_cast(t_env *env)
 		if (env->end >= WIN_H)
 			env->end = WIN_H - 1;
 		if (env->type == 1)
-			env->color = RGB(140, 70, 200);
+			env->color = RGB(70, 20, 100);
 		else
-			env->color = (RGB(150, 70, 210));
+			env->color = (RGB(70, 20, 120));
 		draw_wall(env, x);
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->image.ptr, 0, 0);
