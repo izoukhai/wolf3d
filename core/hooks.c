@@ -44,20 +44,20 @@ void		move_cam(t_env *env, const int dir)
 	tmp2 = env->plane.x;
 	if (dir == 3)
 	{
-		env->player.dir.x = env->player.dir.x * cos(-0.05) -
-			env->player.dir.y * sin(-0.05);
-		env->player.dir.y = tmp * sin(-0.05) + env->player.dir.y * cos(-0.05);
-		env->plane.x = env->plane.x * cos(-0.05) - env->plane.y * sin(-0.05);
-		env->plane.y = tmp2 * sin(-0.05) + env->plane.y * cos(-0.05);
+		env->player.dir.x = env->player.dir.x * cos(-0.04) -
+			env->player.dir.y * sin(-0.04);
+		env->player.dir.y = tmp * sin(-0.04) + env->player.dir.y * cos(-0.04);
+		env->plane.x = env->plane.x * cos(-0.04) - env->plane.y * sin(-0.04);
+		env->plane.y = tmp2 * sin(-0.04) + env->plane.y * cos(-0.04);
 	}
 	if (dir == 1)
 	{
-		env->player.dir.x = env->player.dir.x * cos(0.05) -
-			env->player.dir.y * sin(0.05);
-		env->player.dir.y = tmp * sin(0.05) + env->player.dir.y * cos(0.05);
+		env->player.dir.x = env->player.dir.x * cos(0.04) -
+			env->player.dir.y * sin(0.04);
+		env->player.dir.y = tmp * sin(0.04) + env->player.dir.y * cos(0.04);
 		tmp2 = env->plane.x;
-		env->plane.x = env->plane.x * cos(0.05) - env->plane.y * sin(0.05);
-		env->plane.y = tmp2 * sin(0.05) + env->plane.y * cos(0.05);
+		env->plane.x = env->plane.x * cos(0.04) - env->plane.y * sin(0.04);
+		env->plane.y = tmp2 * sin(0.04) + env->plane.y * cos(0.04);
 	}
 }
 
@@ -72,13 +72,15 @@ int			on_press(int key, t_env *env)
 	if (key == kVK_LeftArrow)
 		env->left = 1;
 	if (key == 257)
-		env->speed = 0.15;
+		env->speed = 0.10;
 	if (key == kVK_Escape)
 		die(env, "program exit.", 1);
 	if (key == kVK_ANSI_KeypadPlus && env->color_select < 4)
 		env->color_select++;
 	if (key == kVK_ANSI_KeypadMinus && env->color_select > 0)
 		env->color_select--;
+	if (key == kVK_Space)
+		env->b_color *= -1;
 	return (1);
 }
 
@@ -93,7 +95,7 @@ int			on_release(int key, t_env *env)
 	if (key == kVK_LeftArrow)
 		env->left = 0;
 	if (key == 257)
-		env->speed = 0.08;
+		env->speed = 0.04;
 	return (1);
 }
 

@@ -33,12 +33,13 @@ void		init(t_env *env, char *map)
 	env->plane.x = 0;
 	env->plane.y = 0.66;
 	env->malloced = 0;
-	env->speed = 0.08;
+	env->speed = 0.05;
 	env->right = 0;
 	env->up = 0;
 	env->left = 0;
 	env->down = 0;
 	env->color_select = 0;
+	env->b_color = -1;
 	init_core(env);
 	init_colors(env);
 	init_map(env);

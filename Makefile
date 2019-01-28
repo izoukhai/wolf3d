@@ -8,7 +8,7 @@ all: $(NAME)
 $(NAME):$(OBJ) wolf3d.h keys.h
 	make -C graphic/minilib/
 	make -C libft/
-	gcc $(SRC) libft/libft.a graphic/minilib/libmlx.a -o $(NAME) -framework OpenGL -framework AppKit -lpthread
+	gcc $(SRC) libft/libft.a graphic/minilib/libmlx.a -o $(NAME) -framework OpenGL -framework AppKit -lpthread -O3
 
 clean:
 		make clean -C libft/

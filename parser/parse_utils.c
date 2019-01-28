@@ -42,9 +42,10 @@ void		check_map(t_env *env)
 		while (++index.j < env->map.size.j)
 		{
 			if (env->map.coord[index.i][index.j].value != 1 &&
-				(index.i == 0 || index.i == env->map.size.i))
+				(index.i == 0 || index.i == env->map.size.i - 1))
 				die(env, "invalid map (borders are not walls)\n", 1);
-			if (env->map.coord[index.i][index.j].value != 1 && index.j == 0)
+			if (env->map.coord[index.i][index.j].value != 1 && (index.j == 0 ||
+			index.j == env->map.size.j - 1))
 				die(env, "invalid map (borders are not walls)\n", 1);
 			if (env->map.coord[index.i][index.j].value == 0)
 				c++;

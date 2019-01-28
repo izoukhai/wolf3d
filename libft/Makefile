@@ -5,7 +5,7 @@ OBJ=$(FILES:.c=.o)
 all: $(NAME)
 
 $(NAME):$(OBJ) includes/libft.h includes/get_next_line.h
-	gcc -c $(FILES) -Wall -Wextra -Werror
+	gcc -c $(FILES) -Wall -Wextra -Werror -O3
 	ar rcs libft.a $(OBJ)
 
 clean:

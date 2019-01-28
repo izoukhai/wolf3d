@@ -61,12 +61,14 @@ static void	ray_test(t_env *env)
 			env->map_x += env->step.x;
 			env->type = 0;
 		}
-		else
+		else if (env->side_dist.x >= env->side_dist.y)
 		{
 			env->side_dist.y += env->delta_dist.y;
 			env->map_y += env->step.y;
 			env->type = 1;
 		}
+		else
+			env->type = 3;
 		if (env->map.coord[env->map_y][env->map_x].value == 1)
 			env->ray_hit = 1;
 	}
@@ -109,7 +111,7 @@ void		ray_cast(t_env *env)
 		env->end = env->ray_height / 2 + WIN_H / 2;
 		if (env->end >= WIN_H)
 			env->end = WIN_H - 1;
-		env->color = env->map.color[env->type][env->color_select];
+		set_colors(env);
 		draw_wall(env, x);
 	}
 	mlx_put_image_to_window(env->mlx, env->win, env->image.ptr, 0, 0);

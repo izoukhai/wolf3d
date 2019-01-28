@@ -31,3 +31,20 @@ void		init_colors(t_env *env)
 	env->map.color[0][3] = RGB(5, 100, 5);
 	env->map.color[0][4] = RGB(180, 180, 180);
 }
+
+void		set_colors(t_env *env)
+{
+	if (env->b_color == 1)
+		env->color = env->map.color[env->type][env->color_select];
+	else
+	{
+		if (env->type == 0 && env->player.raydir.x > 0)
+			env->color = RGB(170, 0, 0);
+		if (env->type == 0 && env->player.raydir.x < 0)
+			env->color = RGB(0, 200, 40);
+		if (env->type == 1 && env->player.raydir.y > 0)
+			env->color = RGB(0, 0, 200);
+		if (env->type == 1 && env->player.raydir.y < 0)
+			env->color = RGB(170, 100, 0);
+	}
+}

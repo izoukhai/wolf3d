@@ -88,6 +88,7 @@ typedef struct	s_env
 	char		*file;
 	int			fd;
 	double		speed;
+	int			b_color;
 }				t_env;
 
 void			init(t_env *env, char *map);
