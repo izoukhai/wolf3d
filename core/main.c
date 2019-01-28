@@ -23,6 +23,8 @@ int			main(int ac, char **av)
 {
 	t_env	env;
 
+	if (ac != 2)
+		die(&env, "usage: ./wolf3d [map]\n", 0);
 	if ((env.fd = open(av[1], O_RDONLY)) == -1)
 		die(&env, "invalid file\n", 0);
 	init(&env, av[1]);
