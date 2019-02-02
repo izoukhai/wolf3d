@@ -1,5 +1,5 @@
 NAME=wolf3d
-SRC= core/init.c core/main.c world/colors.c graphic/draw.c graphic/line.c parser/parser.c core/utils.c parser/parse_utils.c world/ray.c core/hooks.c
+SRC= core/init.c graphic/textures.c core/main.c world/colors.c graphic/draw.c graphic/line.c parser/parser.c core/utils.c parser/parse_utils.c world/ray.c core/hooks.c
 OBJ=$(SRC:.c=.o)
 
 all: $(NAME)

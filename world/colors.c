@@ -35,16 +35,18 @@ void		init_colors(t_env *env)
 void		set_colors(t_env *env)
 {
 	if (env->b_color == 1)
+	{
 		env->color = env->map.color[env->type][env->color_select];
+	}
 	else
 	{
 		if (env->type == 0 && env->player.raydir.x > 0)
-			env->color = RGB(170, 0, 0);
+			env->tex.id = 0;
 		if (env->type == 0 && env->player.raydir.x < 0)
-			env->color = RGB(0, 200, 40);
+			env->tex.id = 1;
 		if (env->type == 1 && env->player.raydir.y > 0)
-			env->color = RGB(0, 0, 200);
+			env->tex.id = 2;
 		if (env->type == 1 && env->player.raydir.y < 0)
-			env->color = RGB(170, 100, 0);
+			env->tex.id = 3;	
 	}
 }

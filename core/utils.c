@@ -29,6 +29,7 @@ void		die(t_env *env, char *msg, const int b_free)
 		mlx_destroy_image(env->mlx, env->image.ptr);
 	if (env->win != NULL)
 		mlx_destroy_window(env->mlx, env->win);
+	del_textures(env);
 	exit(1);
 }
 

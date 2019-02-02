@@ -104,6 +104,7 @@ void		ray_cast(t_env *env)
 			[(int)env->player.pos.x].value = 0;
 		env->ray_height = (int)(WIN_H / env->wall_dist);
 		env->start = -env->ray_height / 2 + WIN_H / 2;
+		env->tex_x = env->wall_dist * 64;
 		if (env->start < 0)
 			env->start = 0;
 		if (env->start > WIN_W)

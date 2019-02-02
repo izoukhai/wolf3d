@@ -56,7 +56,15 @@ typedef struct	s_image
 	int			szl;
 	int			bpp;
 	int			endian;
+	int			width;
+	int			height;
 }				t_image;
+
+typedef struct	s_texture
+{
+	t_image		walls[4];
+	uint8_t		id;
+}				t_texture;
 
 typedef struct	s_env
 {
@@ -65,6 +73,7 @@ typedef struct	s_env
 	int			malloced;
 	t_image		image;
 	t_map		map;
+	t_texture	tex;
 	int			map_x;
 	int			map_y;
 	t_point		delta_dist;
@@ -89,6 +98,8 @@ typedef struct	s_env
 	int			fd;
 	double		speed;
 	int			b_color;
+	double		tex_x;
+	double		tex_y;
 }				t_env;
 
 void			init(t_env *env, char *map);
@@ -120,5 +131,7 @@ void			move_cam(t_env *env, const int dir);
 
 void			init_colors(t_env *env);
 void			set_colors(t_env *env);
+void			set_textures(t_env *env);
+void			del_textures(t_env *env);
 
 #endif

@@ -20,6 +20,10 @@ static void	init_core(t_env *env)
 	env->image.ptr = mlx_new_image(env->mlx, WIN_W, WIN_H);
 	env->image.buf = (int*)mlx_get_data_addr(env->image.ptr, &(env->image.bpp),
 		&(env->image.szl), &(env->image.endian));
+	env->tex_x = 0;
+	env->tex_y = 0;
+	env->tex.id = 0;
+	set_textures(env);
 }
 
 void		init(t_env *env, char *map)

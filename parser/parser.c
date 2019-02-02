@@ -75,6 +75,8 @@ static inline void	get_coord(t_env *env)
 		split = ft_strsplit(line, ' ');
 		while (split[++index.j])
 		{
+			if (!ft_isdigit(split[index.j][0]))
+				die(env, "invalid map (must contain only digits)\n", 1);
 			if ((ft_atoi(split[index.j])) == 9)
 				env->player.pos = t_indexo_pos(index);
 			env->map.coord[index.i][index.j].value = ft_atoi(split[index.j]);

@@ -17,16 +17,17 @@ void				put_pixel(t_env *env, double x, double y, int color)
 {
 	if ((x > 0 && x < WIN_W) && (y > 0 && y < WIN_H))
 		env->image.buf[((int)y * WIN_W + (int)x)] = color;
+	
 }
 
-void				connect_rect(t_env *env, t_index pos, int color)
+void				put_pixel_tex(t_env *env, double x, double y, t_image texture)
 {
-	if (pos.j < env->map.size.j - 1)
-		put_line(env, env->map.coord[pos.i][pos.j],
-			env->map.coord[pos.i][pos.j + 1], color);
-	if (pos.i < env->map.size.i - 1)
-		put_line(env, env->map.coord[pos.i][pos.j],
-			env->map.coord[pos.i + 1][pos.j], color);
+	env->tex_y = ((y - WIN_H * 0.5f + env->ray_height * 0.5f) *
+	texture.height) / env->ray_height - 0.5;
+	if ((x > 0 && x < WIN_W) && (y > 0 && y < WIN_H))
+		env->image.buf[((int)y * WIN_W + (int)x)] =
+		texture.buf[texture.height *
+		(int)env->tex_y + (int)env->tex_x];
 }
 
 void				draw_wall(t_env *env, int x)
@@ -34,10 +35,22 @@ void				draw_wall(t_env *env, int x)
 	int tmp;
 
 	tmp = -1;
+	if (env->type == 0)
+		env->tex_x = env->player.raypos.y + env->wall_dist * env->player.raydir.y;
+	else
+		env->tex_x = env->player.raypos.x + env->wall_dist * env->player.raydir.x;
+	env->tex_x -= floor(env->tex_x);
+	env->tex_x *= (double)env->tex.walls[env->tex.id].height;
 	while (++tmp <= env->start)
 		put_pixel(env, x, tmp, env->map.color[2][env->color_select]);
 	while (++env->start <= env->end)
-		put_pixel(env, x, (int)env->start, env->color);
+	{
+		if (env->b_color == -1)
+			put_pixel_tex(env, x, (int)env->start, env->tex.walls[env->tex.id]);
+		else
+			put_pixel(env, x, (int)env->start,
+			env->map.color[env->type][env->color_select]);
+	}
 	while (++env->start <= WIN_H)
 		put_pixel(env, x, (int)env->start,
 		env->map.color[2][env->color_select]);
