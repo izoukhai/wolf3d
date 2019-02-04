@@ -47,6 +47,6 @@ void		set_colors(t_env *env)
 		if (env->type == 1 && env->player.raydir.y > 0)
 			env->tex.id = 2;
 		if (env->type == 1 && env->player.raydir.y < 0)
-			env->tex.id = 3;	
+			env->tex.id = 3;
 	}
 }

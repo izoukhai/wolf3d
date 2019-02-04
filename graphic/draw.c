@@ -17,10 +17,10 @@ void				put_pixel(t_env *env, double x, double y, int color)
 {
 	if ((x > 0 && x < WIN_W) && (y > 0 && y < WIN_H))
 		env->image.buf[((int)y * WIN_W + (int)x)] = color;
-	
 }
 
-void				put_pixel_tex(t_env *env, double x, double y, t_image texture)
+void				put_pixel_tex(t_env *env, double x, double y,
+					t_image texture)
 {
 	env->tex_y = ((y - WIN_H * 0.5f + env->ray_height * 0.5f) *
 	texture.height) / env->ray_height - 0.5;
@@ -36,9 +36,11 @@ void				draw_wall(t_env *env, int x)
 
 	tmp = -1;
 	if (env->type == 0)
-		env->tex_x = env->player.raypos.y + env->wall_dist * env->player.raydir.y;
+		env->tex_x = env->player.raypos.y + env->wall_dist *
+		env->player.raydir.y;
 	else
-		env->tex_x = env->player.raypos.x + env->wall_dist * env->player.raydir.x;
+		env->tex_x = env->player.raypos.x + env->wall_dist *
+		env->player.raydir.x;
 	env->tex_x -= floor(env->tex_x);
 	env->tex_x *= (double)env->tex.walls[env->tex.id].height;
 	while (++tmp <= env->start)
